@@ -20,7 +20,7 @@ namespace LeakTracker
         {
             Loadtable = new Dictionary<string, Dictionary<int, int>>();
 #if UNITY_EDITOR
-						debugLeaks=UnityEditor.EditorPrefs.GetBool(nameof(debugLeaks));
+			debugLeaks=UnityEditor.EditorPrefs.GetBool(nameof(debugLeaks));
 #endif
         }
 
@@ -98,7 +98,6 @@ namespace LeakTracker
                     allLoaders[instanceID] = newLoadCount;
                     if (newLoadCount == 0)
                     {
-                        Debug.Log("do stuff");
                         // removes this loader from the asset if it has no more loads
                         allLoaders.Remove(unloader.GetInstanceID());
                         // if the asset doesnt have anymore loaders then we also remove it from the dict

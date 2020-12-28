@@ -152,13 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4f15391490343d99efc17c1ecc3820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  v:
-    m_PersistentCalls:
-      m_Calls: []
+  assets: []
 --- !u!4 &7284222
 Transform:
   m_ObjectHideFlags: 0
@@ -202,37 +196,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4f15391490343d99efc17c1ecc3820, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  asset:
-    m_AssetGUID: 
+  assets:
+  - m_AssetGUID: ec02be427537d4c79930203bc240d082
     m_SubObjectName: 
     m_SubObjectType: 
-  v:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7284220}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 1
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  - m_AssetGUID: d84ed6e78cfc84a68b0aa0b62ecaf5dc
+    m_SubObjectName: 
+    m_SubObjectType: 
+  - m_AssetGUID: ec02be427537d4c79930203bc240d082
+    m_SubObjectName: 
+    m_SubObjectType: 
+  - m_AssetGUID: 3e8cad99add2f4244864314075e81b51
+    m_SubObjectName: 
+    m_SubObjectType: 
+  - m_AssetGUID: c817c69891a59492490339fae7c4e4b8
+    m_SubObjectName: 
+    m_SubObjectType: 
 --- !u!4 &348052125
 Transform:
   m_ObjectHideFlags: 0
