@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,9 +10,7 @@ namespace LeakTracker
     public static partial class LeakTracker
     {
         public static Dictionary<string, Dictionary<int, int>> Loadtable { get; private set; }
-
-        private static
-        bool debugLeaks;
+	    static bool debugLeaks;
         /// <summary>
         /// used for editor window to know when a repaint is required
         /// </summary>
