@@ -1,21 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement;
-
+using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine.SceneManagement;
 namespace LeakTracker
 {
     public static partial class LeakTracker
     {
         public static Dictionary<string, Dictionary<int, int>> Loadtable { get; private set; }
-	    static bool debugLeaks;
+        static bool debugLeaks;
         /// <summary>
         /// used for editor window to know when a repaint is required
         /// </summary>
-	    public
-        static bool update;
+	    public static bool update;
         static LeakTracker()
         {
             Loadtable = new Dictionary<string, Dictionary<int, int>>();
@@ -46,6 +45,44 @@ namespace LeakTracker
 
             Loadtable[guid][loaderID] += 1;
             update = true;
+        }
+
+        private static void RemoveAsset(string guid, int instanceID)
+        {
+            Dictionary<int, int> allLoaders;
+            if (Loadtable.TryGetValue(guid, out allLoaders) && allLoaders.ContainsKey(instanceID))
+            {
+                var newLoadCount = allLoaders[instanceID] - 1;
+                allLoaders[instanceID] = newLoadCount;
+                if (newLoadCount == 0)
+                {
+                    // removes this loader from the asset if it has no more loads
+                    allLoaders.Remove(instanceID);
+                    // if the asset doesnt have anymore loaders then we also remove it from the dict
+                    if (allLoaders.Count == 0)
+                        Loadtable.Remove(guid);
+                }
+            }
+
+            update = true;
+        }
+
+        public static AsyncOperationHandle<SceneInstance> LoadSceneAsync(this AssetReference assetref, Object loader, LoadSceneMode mode = LoadSceneMode.Single,
+            bool activateOnLoad = true,
+            int prioirty = 100)
+        {
+            var loadOperation = assetref.LoadSceneAsync(mode, activateOnLoad, prioirty);
+            if (debugLeaks && loadOperation.IsValid())
+                UpdateLoadTable(assetref.AssetGUID, loader.GetInstanceID());
+            return loadOperation;
+        }
+
+        public static AsyncOperationHandle<SceneInstance> UnLoadScene(this AssetReference assetref, Object UnLoader)
+        {
+            var handle = assetref.UnLoadScene();
+            if (debugLeaks)
+                RemoveAsset(assetref.AssetGUID, UnLoader.GetInstanceID());
+            return handle;
         }
 
         /// <summary>
@@ -89,25 +126,9 @@ namespace LeakTracker
         {
             assetref.ReleaseAsset();
             if (debugLeaks)
-            {
-                int instanceID = unloader.GetInstanceID();
-                Dictionary<int, int> allLoaders;
-                if (Loadtable.TryGetValue(assetref.AssetGUID, out allLoaders) && allLoaders.ContainsKey(instanceID))
-                {
-                    var newLoadCount = allLoaders[instanceID] - 1;
-                    allLoaders[instanceID] = newLoadCount;
-                    if (newLoadCount == 0)
-                    {
-                        // removes this loader from the asset if it has no more loads
-                        allLoaders.Remove(unloader.GetInstanceID());
-                        // if the asset doesnt have anymore loaders then we also remove it from the dict
-                        if (allLoaders.Count == 0)
-                            Loadtable.Remove(assetref.AssetGUID);
-                    }
-                }
+                RemoveAsset(assetref.AssetGUID, unloader.GetInstanceID());
 
-                update = true;
-            }
         }
+
     }
 }
