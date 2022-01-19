@@ -1,5 +1,4 @@
 # UnityLeakTracker
-Extension methods to track memory leaks when using unity Addressable Asset System
 
 [Unity's addressable asset system](https://docs.unity3d.com/Packages/com.unity.addressables@1.19/manual/index.html) uses ref counting to track when to unload asssets. Only annoying thing is that they dont expose the ref count of the given asset. This set of extension methods is a thin layer atop the addressables that tracks a ref count of assets & and also keeps a pointer to the object that requested the load.
 
