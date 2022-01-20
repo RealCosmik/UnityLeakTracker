@@ -21,8 +21,3 @@ Access to leak tracker window can be found inside the tools Menu
 easy to tell that each asset in the image wont be released until both of those gameobject release their handles.
 
 Optional Gc.Collect button because when debugging assets I sometime manually call the GC to see if/why a pointer is dangling or not
-
-# in project usage
-## [Aceplay](https://apps.apple.com/us/app/ace-play/id1481622112)
-![](https://image.winudf.com/v2/image1/Y29tLmp1bXBidXR0b25zdHVkaW8uYWNlcGxheV9pY29uXzE1ODE3Mzc0MzFfMDcw/icon.png?w=&fakeurl=1)
-
